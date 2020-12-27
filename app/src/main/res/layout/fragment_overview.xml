@@ -46,9 +46,22 @@
             app:listData="@{viewModel.properties}"
             app:spanCount="2"
             tools:itemCount="16"
+            android:visibility="visible"
             tools:listitem="@layout/grid_view_item" />
 
-        <!-- TODO (05) Add ImageView to the ConstraintLayout, wrap_content, same constraints as RecyclerView -->
+        <!-- DONE (05) Add ImageView to the ConstraintLayout, wrap_content, same constraints as RecyclerView -->
+
+        <ImageView
+            android:id="@+id/status_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/loading_animation"
+            app:marsApiStatus="@{viewModel.status}"
+             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
