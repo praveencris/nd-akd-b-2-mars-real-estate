@@ -40,7 +40,7 @@ private val moshi = Moshi.Builder()
  */
 private val retrofit = Retrofit.Builder()
         .addConverterFactory(MoshiConverterFactory.create(moshi))
-        // TODO (02) Use .addCallAdapterFactory to add the CoroutineCallAdapterFactory
+        // NOT REQUIRED (02) Use .addCallAdapterFactory to add the CoroutineCallAdapterFactory
         .baseUrl(BASE_URL)
         .build()
 
@@ -54,13 +54,13 @@ interface MarsApiService {
      * HTTP method
      */
     @GET("realestate")
-    fun getProperties(): Call<List<MarsProperty>>
-    // TODO (03) Change the return type from our getProperties call to Deferred
+   suspend fun getProperties(): List<MarsProperty>
+    // DONE (03) Change the return type from our getProperties call to Deferred
 }
 
 /**
  * A public Api object that exposes the lazy-initialized Retrofit service
  */
 object MarsApi {
-    val retrofitService : MarsApiService by lazy { retrofit.create(MarsApiService::class.java) }
+    val retrofitService: MarsApiService by lazy { retrofit.create(MarsApiService::class.java) }
 }
