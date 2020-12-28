@@ -21,6 +21,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.android.marsrealestate.databinding.FragmentDetailBinding
 
 /**
@@ -29,13 +30,17 @@ import com.example.android.marsrealestate.databinding.FragmentDetailBinding
 class DetailFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        @Suppress("UNUSED_VARIABLE")
         val application = requireNotNull(activity).application
         val binding = FragmentDetailBinding.inflate(inflater)
         binding.lifecycleOwner = this
-        // TODO (14) Get the selectedProperty from the fragment arguments with DetailFragmentArgs
-        // TODO (15) Create the DetailViewModelFactory using the marsProperty and application
-        // TODO (16) Get the DetailViewModel from the DetailViewModelFactory and set it in the binding
+
+        val selectedProperty = DetailFragmentArgs.fromBundle(arguments!!).selectedProperty
+        val detailViewModelFactory = DetailViewModelFactory(selectedProperty, application)
+        val viewModel = ViewModelProvider(this, detailViewModelFactory).get(DetailViewModel::class.java)
+        binding.viewModel = viewModel
+        // DONE (14) Get the selectedProperty from the fragment arguments with DetailFragmentArgs
+        // DONE (15) Create the DetailViewModelFactory using the marsProperty and application
+        // DONE (16) Get the DetailViewModel from the DetailViewModelFactory and set it in the binding
         return binding.root
     }
 }
