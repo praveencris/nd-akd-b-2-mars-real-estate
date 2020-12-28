@@ -23,10 +23,16 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Query
+
 // import kotlinx.coroutines.Deferred
 
 private const val BASE_URL = "https://mars.udacity.com/"
-// TODO (01) Create an enum full of constants to match the query values our web service expects
+
+// DONE (01) Create an enum full of constants to match the query values our web service expects
+enum class MarsApiFilter(val value: String) {
+    SHOW_RENT("rent"), SHOW_SALE("buy"), SHOW_ALL("all")
+}
 
 /**
  * Build the Moshi object that Retrofit will be using, making sure to add the Kotlin adapter for
@@ -54,14 +60,14 @@ interface MarsApiService {
      * The @GET annotation indicates that the "realestate" endpoint will be requested with the GET
      * HTTP method
      */
-    // TODO (02) Add filter @Query value to the getProperties method
+    // DONE (02) Add filter @Query value to the getProperties method
     @GET("realestate")
-    suspend fun getProperties(): List<MarsProperty>
+    suspend fun getProperties(@Query("filter") type: String): List<MarsProperty>
 }
 
 /**
  * A public Api object that exposes the lazy-initialized Retrofit service
  */
 object MarsApi {
-    val retrofitService : MarsApiService by lazy { retrofit.create(MarsApiService::class.java) }
+    val retrofitService: MarsApiService by lazy { retrofit.create(MarsApiService::class.java) }
 }
